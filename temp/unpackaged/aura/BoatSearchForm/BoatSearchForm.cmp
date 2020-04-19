@@ -1,0 +1,26 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="BoatTypesControllerDB" access="global">
+    <aura:attribute name="options" type="BoatType__c[]"/>
+    <aura:attribute name="selectedValue" type="String" default=""/>
+    <aura:attribute name="isNewRecordSupported" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.loadOptions}" />  
+     <aura:registerEvent name="formSubmit" type="c:FormSubmit"/>
+    <lightning:layout horizontalAlign="center">
+        <lightning:layoutItem >
+            <lightning:select name="mySelect" label=""  aura:id="mySelect" value="{!v.selectedValue}">
+                <option text="All Types" value="" selected="true"/>
+                <aura:iteration items="{!v.options}" var="item">
+                    <option text="{!item.Name}" value="{!item.Id}"/>
+                </aura:iteration>
+            </lightning:select>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="auto" padding="around-small">
+            <lightning:button variant="brand" label="Search" onclick="{!c.onFormSubmit}"/>
+        </lightning:layoutItem>
+        <aura:if isTrue='{!v.isNewRecordSupported}'>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                <lightning:button variant="neutral" label="New" onclick="{! c.handleNewClick }"/>
+            </lightning:layoutItem>
+        </aura:if> 
+        
+    </lightning:layout>
+</aura:component>
